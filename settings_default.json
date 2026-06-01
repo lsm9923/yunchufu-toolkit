@@ -1,0 +1,11 @@
+{
+    "accounts": [
+        {
+            "mark": "测试账号",
+            "url": "https://www.douyin.com/user/MS4wLjABAAAAkb7wpju-GjN-qWEhhb7hG3X1e7NWz9_1UWL4wSXGZfFw_lI1Vw_c0Us1PjMbnlek",
+            "earliest": "2024/1/1",
+            "latest": ""
+        }
+    ],
+    "save_folder": "D:\\douyin_downloads"
+}

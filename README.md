@@ -1,109 +1,67 @@
-# Yunchufu Toolkit - AI-Powered Content Processing Platform
+# DouYinDownload
 
-A local multi-functional content processing platform integrating AI API proxy, content scraping, audio/video transcription, and batch downloading.
+本项目基于 Python 3.12
 
-[English](#features) | [中文](#功能介绍)
+## 项目功能
 
-## Features
+1. 使用协程下载视频与图集（协程数为 5）
+2. 配置文件可设置是否下载视频、是否下载图集。
+3. 使用配置文件连续下载多个帐号视频。
 
-- **Multi-Platform Content Scraping**: Douyin, Xiaohongshu (Little Red Book), WeChat Video
-- **AI-Powered Analysis**: Content extraction, analysis, and report generation via OpenAI-compatible APIs
-- **Audio/Video Transcription**: Local ASR (Automatic Speech Recognition) support
-- **Batch Download**: Automated Douyin video batch downloading with progress tracking
-- **Cross-Platform**: Works on Windows and macOS
+### 运行截图
 
-## Tech Stack
+![](images/运行截图1.png)
+![](images/运行截图2.png)
 
-- **Backend**: Node.js native HTTP server (zero dependencies)
-- **Frontend**: Single-page application with responsive card-based UI
-- **Python**: ASR service and Douyin batch download tool
+## 配置文件说明 (settings_default.json)
 
-## Quick Start
+### 必要参数
 
-```bash
-# Clone the repository
-git clone https://github.com/lsm9923/yunchufu-toolkit.git
-cd yunchufu-toolkit
+| 条目            | 说明                                                                                                 |
+| --------------- | ---------------------------------------------------------------------------------------------------- |
+| accounts        | 要下载的帐号信息，可添加多个帐号                                                                     |
+| mark            | 账号标识，可以设置为空字符串                                                                         |
+| url             | 账号主页链接（必须为电脑网页端链接）                                                                 |
+| earliest        | 要下载的作品最早发布日期（默认为 2016/9/20）                                                         |
+| latest          | 要下载的作品最晚发布日期（默认为 前一天日期）                                                        |
 
-# Start the main server
-node server.js
-# Open http://localhost:3210
+- **注意**：cookies 为必要参数，但不需要通过配置文件修改，而是通过程序运行自动配置。可根据下图从浏览器复制
+ ![](images/复制cookie.png)
+- **注意**：对于 .dash 视频，本项目采用直接修改文件后缀的方式（xxx.dash 改为 xxx.mp4）（目前还不清楚是否有视频为真正的 .dash 格式，因此暂时使用这个方案）
 
-# (Optional) Start ASR service for audio/video transcription
-python asr_server.py   # Windows
-python3 asr_server.py  # macOS
-```
+### 可选参数
 
-## Module Overview
+| 条目            | 说明                                                                                                 | json 配置示例 |
+| --------------- | ---------------------------------------------------------------------------------------------------- | --------------------- |
+| save_folder     | 下载视频存储文件夹（默认为项目根目录）                                                               | "save_folder": "douyin/my_folder" |
+| download_videos | 设置为 false，则不下载视频                                                                         | "download_videos": false |
+| download_images | 设置为 false，则不下载图集                                                                         | "download_images": false |
+| name_format     | 下载的视频命名格式（可选项：create_time(视频发布日期) id(视频 id) type(图集/视频) desc(视频描述文本) | "name_format": [ "create_time", "id" ] |
+| split           | 上述 “name_format” 不同项间的间隔符（默认为 “-”）                                                    | "split": "-" |
+| date_format     | 上述 “name_format” 中日期格式（默认为 “%Y-%m-%d”(年月日)）                                           | "date_format", "%Y-%m-%d" |
+| proxy  | 网络代理（若使用 clash 的 Tun 模式，就需要这个参数）| "proxy": "<http://127.0.0.1:7897>" |
 
-| Module | Description | API Endpoint |
-|--------|-------------|--------------|
-| Content Extract | Parse links and extract content | `/api/proxy` |
-| Content Analysis | AI-powered content analysis | `/api/fetch-article` |
-| Xiaohongshu | Scrape notes and download videos | `/api/fetch-xhs` |
-| Douyin | Video info + batch download | `/api/fetch-douyin`, `/api/douyin-batch-download` |
-| WeChat Video | Scrape video content | `/api/fetch-sph` |
-| File Processing | Upload, transcribe, extract text | `/api/upload-file` |
+## 免责声明 (Disclaimer)
 
-## Configuration
+- 本项目仅用于学习和研究使用，不得用于任何商业和非法目的。使用本项目提供的功能，用户需自行承担可能带来的一切法律责任。
 
-Configure your AI API in the Settings page:
+- 使用本项目的内容，即代表您同意本免责声明的所有条款和条件。如果你不接受以上的免责声明，请立即停止使用本项目。
 
-- **API URL**: Any OpenAI-compatible endpoint
-- **API Key**: Your API key
-- **Model**: Model name (default: `mimo-v2.5-pro`)
-- **Temperature**: Generation temperature (default: `0.1`)
+- 如有侵犯到您的知识产权、个人隐私等，请立即联系我们， 我们将积极配合保护您的权益。
 
-## Dependencies
+## 项目参考 (Refer)
 
-### Node.js
-Built with Node.js native modules only - no `npm install` required for the main server.
-
-### Python (for Douyin batch download)
-```bash
-cd douyin_download
-pip install -r requirements.txt
-```
-
-## Project Structure
-
-```
-├── server.js              # Node.js main server (API proxy + static files)
-├── yunchufu.html          # Frontend SPA
-├── a_bogus.js             # Douyin signature algorithm
-├── asr_server.py          # ASR speech recognition service
-├── guide.html             # User guide
-├── logo.png               # Project logo
-└── douyin_download/       # Douyin batch download tool (Python)
-    ├── batch_download.py  # Non-interactive entry point
-    ├── run.py             # Interactive CLI entry point
-    ├── requirements.txt
-    └── src/
-        ├── config/        # Settings, Cookie, Account classes
-        ├── download/      # List fetching, work parsing, download logic
-        ├── encrypt_params/ # a_bogus signature, msToken
-        └── tool/          # Utility functions
-```
-
-## Why This Project?
-
-In the Chinese content creation ecosystem, creators often need to:
-
-1. **Monitor competitor content** across multiple platforms (Douyin, Xiaohongshu, WeChat)
-2. **Analyze trending topics** and content strategies
-3. **Archive their own content** with backup downloads
-4. **Transcribe video/audio** for content repurposing
-
-This toolkit provides a unified, local-first solution that respects user privacy (no cloud dependencies for core features) and works across all major Chinese social platforms.
-
-## License
-
-MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Contact
-
-- GitHub: [@lsm9923](https://github.com/lsm9923)
+- <https://github.com/NearHuiwen/TiktokDouyinCrawler>
+- <https://github.com/JoeanAmier/TikTokDownloader>
+- <https://github.com/Johnserf-Seed/f2>
+- <https://github.com/Johnserf-Seed/TikTokDownload>
+- <https://github.com/Evil0ctal/Douyin_TikTok_Download_API>
+- <https://github.com/NearHuiwen/TiktokDouyinCrawler>
+- <https://github.com/ihmily/DouyinLiveRecorder>
+- <https://github.com/encode/httpx/>
+- <https://github.com/Textualize/rich>
+- <https://github.com/omnilib/aiosqlite>
+- <https://github.com/borisbabic/browser_cookie3>
+- <https://github.com/pyinstaller/pyinstaller>
+- <https://ffmpeg.org/ffmpeg-all.html>
+- <https://html5up.net/hyperspace>
