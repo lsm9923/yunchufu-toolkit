@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雲初馥 - 使用说明</title>
+<style>
+  :root {
+    --bg-primary: #0f0f13;
+    --bg-secondary: #1a1a24;
+    --bg-tertiary: #232334;
+    --bg-hover: #2a2a3d;
+    --text-primary: #e8e8ed;
+    --text-secondary: #9d9db5;
+    --text-muted: #6b6b82;
+    --accent: #7c6aef;
+    --accent-hover: #9485f0;
+    --accent-dim: rgba(124,106,239,0.15);
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --border: #2d2d42;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+    margin-bottom: 32px;
+  }
+  .back-link:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+    padding: 48px 24px;
+    background: linear-gradient(135deg, rgba(124,106,239,0.08), rgba(167,139,250,0.04));
+    border: 1px solid rgba(124,106,239,0.15);
+    border-radius: 16px;
+  }
+  .hero-icon { font-size: 56px; margin-bottom: 16px; }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; }
+  .hero .tagline {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: var(--accent-dim);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 48px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--accent);
+  }
+  p { font-size: 14px; color: var(--text-secondary); margin: 8px 0; }
+  strong { color: var(--text-primary); }
+  .flow-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+    padding: 24px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .flow-step {
+    padding: 12px 20px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(124,106,239,0.3);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+  }
+  .flow-step .step-num {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .flow-arrow { color: var(--text-muted); font-size: 20px; }
+  .card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .card-highlight {
+    border-color: rgba(124,106,239,0.3);
+    background: linear-gradient(135deg, var(--bg-secondary), rgba(124,106,239,0.05));
+  }
+  .dim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .dim-item {
+    padding: 14px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .dim-item .dim-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dim-item .dim-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .tip-box {
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    margin: 16px 0;
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tip-box .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .tip-info { background: var(--accent-dim); border: 1px solid rgba(124,106,239,0.3); color: var(--accent); }
+  .tip-warning { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); color: var(--warning); }
+  .tip-success { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.3); color: var(--success); }
+  .tip-danger { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.3); color: var(--danger); }
+  .step-list { margin: 12px 0; padding-left: 0; list-style: none; }
+  .step-list li {
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent);
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .step-list li strong { color: var(--accent); }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .compare-table th, .compare-table td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .compare-table th {
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .compare-table td { color: var(--text-secondary); }
+  .compare-table tr:hover td { background: var(--bg-tertiary); }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-accent { background: var(--accent-dim); color: var(--accent); }
+  .tag-success { background: rgba(74,222,128,0.15); color: var(--success); }
+  .tag-warning { background: rgba(251,191,36,0.15); color: var(--warning); }
+  .tag-danger { background: rgba(248,113,113,0.15); color: var(--danger); }
+  .screenshot {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    background: var(--bg-secondary);
+    margin: 12px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .faq-item {
+    margin: 16px 0;
+    padding: 16px 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    gap: 8px;
+  }
+  .faq-a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-left: 24px;
+  }
+  .file-tree {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 2;
+    padding: 16px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    margin: 12px 0;
+  }
+  .file-tree .folder { color: var(--warning); }
+  .file-tree .file { color: var(--accent); }
+  .file-tree .comment { color: var(--text-muted); }
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .pain-item {
+    padding: 14px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+  }
+  .pain-item .pain-problem { color: var(--danger); font-weight: 600; margin-bottom: 4px; }
+  .pain-item .pain-solution { color: var(--success); }
+  .toc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .toc h4 { font-size: 14px; color: var(--text-primary); margin-bottom: 12px; }
+  .toc-list { list-style: none; padding: 0; }
+  .toc-list li { margin: 6px 0; }
+  .toc-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .toc-list a:hover { color: var(--accent); }
+  .toc-list .toc-indent { padding-left: 20px; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  @media (max-width: 640px) {
+    .container { padding: 20px 16px 60px; }
+    .flow-box { flex-direction: column; }
+    .dim-grid { grid-template-columns: 1fr; }
+    .pain-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back-link" href="/">← 返回雲初馥</a>
+
+  <!-- Hero -->
+  <div class="hero">
+    <img src="logo.png" alt="雲初馥" style="width:80px;height:80px;border-radius:12px;object-fit:contain;background:#fff;margin-bottom:16px">
+    <h1>雲初馥 使用说明</h1>
+    <p>拆解优秀公众号，蒸馏创作 Skills，做更好的自己</p>
+    <div class="tagline">提取文章 → 拆解分析 → 生成报告 → 蒸馏 Skills</div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h4>📋 目录</h4>
+    <ul class="toc-list">
+      <li><a href="#what">一、雲初馥是什么？和"洗稿"有什么区别？</a></li>
+      <li><a href="#flow">二、整体流程</a></li>
+      <li><a href="#step1">三、第一步：提取文章</a></li>
+      <li class="toc-indent"><a href="#step1-link">链接导入</a></li>
+      <li class="toc-indent"><a href="#step1-paste">粘贴内容</a></li>
+      <li class="toc-indent"><a href="#step1-batch">批量导入</a></li>
+      <li class="toc-indent"><a href="#step1-excel">Excel 导入</a></li>
+      <li><a href="#step2">四、第二步：AI 七维度拆解</a></li>
+      <li><a href="#step3">五、第三步：生成分析报告</a></li>
+      <li><a href="#step4">六、第四步：蒸馏 Skills</a></li>
+      <li><a href="#usage-prompt">七、提示词版使用方法</a></li>
+      <li><a href="#usage-ima">八、Skills 版 · IMA 知识库用法（推荐小白）</a></li>
+      <li><a href="#usage-agent">九、Skills 版 · AI Agent 标准用法</a></li>
+      <li><a href="#pain-points">十、Skills 解决的创作痛点</a></li>
+      <li><a href="#ai-taste">十一、关于 AI 味</a></li>
+      <li><a href="#faq">十二、常见问题</a></li>
+    </ul>
+  </div>
+
+  <!-- ==================== 一、雲初馥是什么 ==================== -->
+  <h2 id="what"><span>🎯</span> 一、雲初馥是什么？</h2>
+
+  <p>雲初馥是一款帮助用户<strong>拆解和学习优秀公众号</strong>的工具，最终蒸馏出一套完整的创作流程（Skills / 提示词）。</p>
+
+  <div class="card card-highlight">
+    <h4>❌ 洗稿思维（传统做法）</h4>
+    <p>找到一篇低粉爆款文章 → AI 提取主题和论点 → AI 二创 → <strong>内容同质化</strong></p>
+    <p style="margin-top:8px;font-size:13px;color:var(--text-muted)">AI 味不可怕，可怕的是内容同质化。</p>
+  </div>
+
+  <div class="card card-highlight">
+    <h4>✅ 雲初馥思维</h4>
+    <p>以<strong>整个账号</strong>为维度 → 从 <strong>7 个维度深度拆解</strong> → 蒸馏一套完整的创作流程</p>
+    <p style="margin-top:8px;font-size:13px;color:var(--text-muted)">这套流程既是给 AI 的，也是给你的。用这套 Skills 和 AI 共创的同时，也是在提高自己的写作能力。</p>
+  </div>
+
+  <!-- ==================== 二、整体流程 ==================== -->
+  <h2 id="flow"><span>🔄</span> 二、整体流程</h2>
+
+  <div class="flow-box">
+    <div class="flow-step"><span class="step-num">STEP 1</span>📥 提取文章</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="step-num">STEP 2</span>🔬 AI 拆解</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="step-num">STEP 3</span>📊 生成报告</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="step-num">STEP 4</span>✨ 蒸馏 Skills</div>
+  </div>
+
+  <p>每一步都<strong>依赖上一步的结果</strong>，必须按顺序完成。</p>
+
+  <!-- ==================== 三、提取文章 ==================== -->
+  <h2 id="step1"><span>📥</span> 三、第一步：提取文章</h2>
+
+  <p>拆解一个账号，至少要提取 <strong>30 篇文章</strong>，<strong>50 篇最佳</strong>。文章数量越多，分析结果越准确。</p>
+
+  <div class="tip-box tip-warning">
+    <span class="tip-icon">⚠️</span>
+    <div>文章一定要是<strong>同一个方向</strong>的，比如都是情感的、都是育儿的、都是职场成长的等。不同方向混在一起，蒸馏出的 Skills 会不伦不类。</div>
+  </div>
+
+  <h3 id="step1-link">🔗 方式一：链接导入</h3>
+  <ol class="step-list">
+    <li><strong>切换到「链接导入」tab</strong></li>
+    <li>在文本框中粘贴公众号文章链接，<strong>每行一个</strong></li>
+    <li>可选填账号名称</li>
+    <li>点击「提取文章」</li>
+  </ol>
+  <div class="tip-box tip-info">
+    <span class="tip-icon">💡</span>
+    <div>微信文章链接获取方式：在微信里打开一篇文章 → 点击右上角工具条 → 复制链接</div>
+  </div>
+  <div class="tip-box tip-warning">
+    <span class="tip-icon">⚠️</span>
+    <div>链接导入仅保存 URL，文章正文需通过其他方式补充内容（因微信有反爬机制）。建议优先使用<strong>粘贴内容</strong>或<strong>Excel 导入</strong>。</div>
+  </div>
+
+  <h3 id="step1-paste">📝 方式二：粘贴内容</h3>
+  <ol class="step-list">
+    <li><strong>切换到「粘贴内容」tab</strong></li>
+    <li>输入文章标题</li>
+    <li>粘贴文章正文内容</li>
+    <li>可选填来源账号</li>
+    <li>点击「添加文章」</li>
+  </ol>
+
+  <h3 id="step1-batch">📚 方式三：批量导入</h3>
+  <p>适合一次性导入多篇已整理好的文章。</p>
+  <ol class="step-list">
+    <li><strong>切换到「批量导入」tab</strong></li>
+    <li>按格式粘贴：<strong>标题与内容用 <code>===</code> 分隔，文章之间用 <code>###</code> 分隔</strong></li>
+    <li>可选填来源账号</li>
+    <li>点击「批量导入」</li>
+  </ol>
+  <div class="screenshot">
+    格式示例：<br>
+    <code>文章标题1<br>===<br>文章正文内容1...<br>###<br>文章标题2<br>===<br>文章正文内容2...</code>
+  </div>
+
+  <h3 id="step1-excel">📊 方式四：Excel 导入（推荐）</h3>
+  <p>如果你的文章已经整理在 Excel 中，这是最高效的方式。</p>
+  <ol class="step-list">
+    <li><strong>切换到「Excel导入」tab</strong></li>
+    <li>点击「选择文件」，上传 <code>.xlsx</code> / <code>.xls</code> / <code>.csv</code> 文件</li>
+    <li>系统自动解析并<strong>预览前5行</strong></li>
+    <li><strong>映射列名</strong>：选择哪一列是标题、哪一列是正文内容（系统会自动识别含关键词的列名）</li>
+    <li>可选映射：来源账号列、文章链接列</li>
+    <li>点击「确认导入」</li>
+  </ol>
+
+  <div class="tip-box tip-info">
+    <span class="tip-icon">💡</span>
+    <div>Excel 列名不需要固定格式，系统会自动匹配包含"标题""正文""内容"等关键词的列。也可以手动下拉选择。</div>
+  </div>
+
+  <!-- ==================== 四、AI 拆解 ==================== -->
+  <h2 id="step2"><span>🔬</span> 四、第二步：AI 七维度拆解</h2>
+
+  <p>AI 会从 <strong>7 个深度维度</strong> 对每篇文章进行拆解分析：</p>
+
+  <div class="dim-grid">
+    <div class="dim-item">
+      <div class="dim-label">🎯 话题切入</div>
+      <div class="dim-desc">如何选择和引入话题，分析开头吸引力</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">💡 主题</div>
+      <div class="dim-desc">核心立意与深层洞察，表面观点 vs 隐含意图</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">📰 标题</div>
+      <div class="dim-desc">标题策略、情绪触发点、3个优化备选标题</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">📦 素材</div>
+      <div class="dim-desc">论据、案例、数据、引用等论证素材</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">🏗 框架</div>
+      <div class="dim-desc">结构大纲、逻辑推进方式、巧妙之处</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">🎨 风格</div>
+      <div class="dim-desc">语言风格、用词习惯、句式特点、对话方式</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">✨ 金句</div>
+      <div class="dim-desc">3-5个传播力金句及其创作手法分析</div>
+    </div>
+  </div>
+
+  <h3>操作方式</h3>
+  <ol class="step-list">
+    <li><strong>切换到「AI 拆解」页面</strong></li>
+    <li>点击「🚀 一键拆解全部」— 批量拆解所有未分析的文章</li>
+    <li>或点击单篇文章的「🔍 拆解」按钮 — 单独拆解感兴趣的文章</li>
+    <li>拆解进度实时显示，每篇文章预计 <strong>10-30 秒</strong></li>
+    <li>拆解完成后可展开查看详细结果，不满意的可以重新拆解</li>
+  </ol>
+
+  <div class="tip-box tip-success">
+    <span class="tip-icon">📌</span>
+    <div><strong>导出素材库</strong>：拆解完成后，点击「📊 导出素材库」可将所有拆解结果导出为 CSV 表格。写作最难的从来不是技巧，而是积累！这个表格不仅是数据，更是你的<strong>素材库</strong>。</div>
+  </div>
+
+  <!-- ==================== 五、生成报告 ==================== -->
+  <h2 id="step3"><span>📊</span> 五、第三步：生成分析报告</h2>
+
+  <p>基于所有拆解结果，AI 汇总生成该账号的完整分析报告，涵盖：</p>
+
+  <div class="card">
+    <table class="compare-table">
+      <tr><th>报告章节</th><th>内容</th></tr>
+      <tr><td>账号画像</td><td>内容定位、目标读者、核心竞争力、内容调性</td></tr>
+      <tr><td>选题规律</td><td>选题类型占比、周期性、可复制选题公式</td></tr>
+      <tr><td>标题策略</td><td>常用手法、高点击标题共性、10个标题模板</td></tr>
+      <tr><td>写作框架</td><td>最常用3种框架详解及详细模板</td></tr>
+      <tr><td>风格特征</td><td>语言风格画像、标志性表达、情绪曲线规律</td></tr>
+      <tr><td>素材使用</td><td>素材类型偏好、获取规律、素材库建议</td></tr>
+      <tr><td>金句创作</td><td>创作手法总结、5个金句模板、传播力分析</td></tr>
+      <tr><td>创作SOP建议</td><td>从选题到成稿的完整创作流程</td></tr>
+    </table>
+  </div>
+
+  <ol class="step-list">
+    <li><strong>切换到「分析报告」页面</strong></li>
+    <li>点击「🧠 生成报告」</li>
+    <li>等待 AI 生成，预计 <strong>2~3 分钟</strong></li>
+    <li>生成完成后可点击「📥 导出报告」下载为 Markdown 文件</li>
+  </ol>
+
+  <!-- ==================== 六、蒸馏 Skills ==================== -->
+  <h2 id="step4"><span>✨</span> 六、第四步：蒸馏 Skills</h2>
+
+  <p>将分析报告蒸馏为可复用的创作流程，输出<strong>两套版本</strong>：</p>
+
+  <div class="card card-highlight">
+    <table class="compare-table">
+      <tr>
+        <th style="width:120px"></th>
+        <th>📝 提示词版</th>
+        <th>📦 Skills 版</th>
+      </tr>
+      <tr>
+        <td><strong>格式</strong></td>
+        <td>单个 MD 文件</td>
+        <td>完整 SOP 目录（9个MD文件）</td>
+      </tr>
+      <tr>
+        <td><strong>使用方式</strong></td>
+        <td>直接发给大模型对话框</td>
+        <td>安装到 AI Agent 或导入 IMA 知识库</td>
+      </tr>
+      <tr>
+        <td><strong>适合用户</strong></td>
+        <td>所有用户（最简单）</td>
+        <td>有一定技术基础的用户</td>
+      </tr>
+      <tr>
+        <td><strong>优点</strong></td>
+        <td>使用简单，上手即用</td>
+        <td>流程稳定、出文质量高、AI 会自主优化提示词</td>
+      </tr>
+      <tr>
+        <td><strong>缺点</strong></td>
+        <td>内容过长时模型可能遗忘流程，需人工引导</td>
+        <td>使用门槛高，需要搭建 AI Agent 环境</td>
+      </tr>
+      <tr>
+        <td><strong>推荐模型</strong></td>
+        <td>豆包、GPT、DeepSeek 等</td>
+        <td>Claude Code、Codex、OpenClaw 等</td>
+      </tr>
+    </table>
+  </div>
+
+  <ol class="step-list">
+    <li><strong>切换到「蒸馏 Skills」页面</strong></li>
+    <li>点击「🧪 开始蒸馏」</li>
+    <li>等待 AI 蒸馏，预计 <strong>2~3 分钟</strong></li>
+    <li>蒸馏完成后可切换查看「提示词版」和「Skills版」</li>
+    <li>点击对应按钮下载</li>
+  </ol>
+
+  <h3>Skills 版的目录结构</h3>
+  <div class="file-tree">
+    📁 <span class="folder">账号名-writing-sop/</span><br>
+    &nbsp;&nbsp;📄 <span class="file">overview.md</span> &nbsp;<span class="comment">→ 整体流程概览</span><br>
+    &nbsp;&nbsp;📄 <span class="file">topic-selection.md</span> &nbsp;<span class="comment">→ 选题SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">title-crafting.md</span> &nbsp;<span class="comment">→ 标题SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">outline-building.md</span> &nbsp;<span class="comment">→ 大纲SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">opening-writing.md</span> &nbsp;<span class="comment">→ 开头SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">body-writing.md</span> &nbsp;<span class="comment">→ 正文SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">golden-sentences.md</span> &nbsp;<span class="comment">→ 金句SOP</span><br>
+    &nbsp;&nbsp;📄 <span class="file">style-guide.md</span> &nbsp;<span class="comment">→ 风格指南</span><br>
+    &nbsp;&nbsp;📄 <span class="file">review-polish.md</span> &nbsp;<span class="comment">→ 审稿润色SOP</span>
+  </div>
+
+  <!-- ==================== 七、提示词版使用 ==================== -->
+  <h2 id="usage-prompt"><span>📝</span> 七、提示词版使用方法</h2>
+
+  <p><span class="tag tag-success">最简单</span> 适合所有用户</p>
+
+  <ol class="step-list">
+    <li>在「蒸馏 Skills」页面，点击「📥 下载提示词版」</li>
+    <li>得到一份 MD 文件</li>
+    <li>将 MD 文件内容<strong>发送给大模型</strong>即可</li>
+    <li>有条件优先使用 <strong>Claude、GPT</strong>，没有条件就用智谱、豆包、DeepSeek 等</li>
+  </ol>
+
+  <div class="tip-box tip-warning">
+    <span class="tip-icon">⚠️</span>
+    <div><strong>注意事项：</strong>提示词版内容较长，大模型经常记不住，写着写着就不按照创作流程来了，需要<strong>人工引导</strong>。如果 AI 跑偏了，及时提醒它回到流程。</div>
+  </div>
+
+  <!-- ==================== 八、IMA 知识库用法 ==================== -->
+  <h2 id="usage-ima"><span>📚</span> 八、Skills 版 · IMA 知识库用法</h2>
+
+  <p><span class="tag tag-accent">推荐小白</span> 比提示词版稍复杂，但效果更好</p>
+
+  <p>原理：把 Skills 中的 MD 文件导入到 <strong>IMA 知识库</strong>，让 AI 在知识库上下文中执行创作流程。</p>
+
+  <ol class="step-list">
+    <li><strong>下载 IMA 知识库应用</strong><br>地址：<a href="https://ima.qq.com/download" style="color:var(--accent)">https://ima.qq.com/download</a>（推荐电脑版）</li>
+    <li><strong>创建一个知识库</strong><br>如命名为「雲初馥 Skills」</li>
+    <li><strong>将 Skills 文件夹上传到知识库</strong><br>进入知识库主页 → 点击右上角加号 → 选择本地文件夹 → 选择导出的 SOP 文件夹</li>
+    <li><strong>在知识库中使用 Skills</strong><br>进入 SOP 文件夹 → 选择模型 → 输入提示词：<br><code style="background:var(--bg-tertiary);padding:4px 8px;border-radius:4px">请严格按照 skill.md 的流程，创作文章</code></li>
+  </ol>
+
+  <div class="tip-box tip-warning">
+    <span class="tip-icon">⚠️</span>
+    <div><strong>手机版注意：</strong>不能直接上传文件夹！需先手动创建对应文件夹，再进入该文件夹上传所有 MD 文件。</div>
+  </div>
+
+  <table class="compare-table">
+    <tr><th style="width:80px">评价</th><th>说明</th></tr>
+    <tr><td><span class="tag tag-success">优点</span></td><td>操作相对简单，适合追求文章质量、能走心的小白用户</td></tr>
+    <tr><td><span class="tag tag-warning">缺点</span></td><td>知识库不会根据需要及时更新 MD 中的提示词</td></tr>
+  </table>
+
+  <!-- ==================== 九、AI Agent 标准用法 ==================== -->
+  <h2 id="usage-agent"><span>🤖</span> 九、Skills 版 · AI Agent 标准用法</h2>
+
+  <p><span class="tag tag-warning">有门槛</span> 效果最好，但需要技术基础</p>
+
+  <p>Skills 的标准用法需要 AI Agent 环境，目前比较火的有：</p>
+
+  <div class="dim-grid">
+    <div class="dim-item">
+      <div class="dim-label">🟣 OpenClaw</div>
+      <div class="dim-desc">开源 AI Agent 工具，支持 Skills 插件</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">🟠 Claude Code</div>
+      <div class="dim-desc">Anthropic 出品的 AI 编程工具</div>
+    </div>
+    <div class="dim-item">
+      <div class="dim-label">🔵 Codex</div>
+      <div class="dim-desc">OpenAI 出品的 AI 编程工具</div>
+    </div>
+  </div>
+
+  <h3>安装方法</h3>
+  <p>把整个 SOP 文件夹复制到 AI Agent 的 <strong>Skills 目录</strong>下即可。</p>
+
+  <div class="file-tree">
+    📁 AI-Agent/skills/<br>
+    &nbsp;&nbsp;└── 📁 <span class="folder">账号名-writing-sop/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📄 <span class="file">overview.md</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── 📄 <span class="file">topic-selection.md</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ...（共9个文件）
+  </div>
+
+  <table class="compare-table">
+    <tr><th style="width:80px">评价</th><th>说明</th></tr>
+    <tr><td><span class="tag tag-success">优点</span></td><td>执行流程稳定、出文质量相对较高、AI 会根据自己的需要优化提示词</td></tr>
+    <tr><td><span class="tag tag-danger">缺点</span></td><td>使用门槛高，需要自行搭建和学习 AI Agent 环境</td></tr>
+  </table>
+
+  <div class="tip-box tip-success">
+    <span class="tip-icon">🔥</span>
+    <div><strong>值得去折腾！</strong>标准用法的创作质量是三种方式中最高的。</div>
+  </div>
+
+  <!-- ==================== 十、创作痛点 ==================== -->
+  <h2 id="pain-points"><span>💊</span> 十、Skills 解决的创作痛点</h2>
+
+  <p>Skills 不是让大家去洗稿的，而是帮助解决创作中的真实痛点：</p>
+
+  <div class="pain-grid">
+    <div class="pain-item">
+      <div class="pain-problem">不知道写什么</div>
+      <div class="pain-solution">→ 用 Skills 学习优秀账号的选题</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-problem">不知道怎么写</div>
+      <div class="pain-solution">→ 用 Skills 学习优秀账号的框架</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-problem">写完感觉没有深度</div>
+      <div class="pain-solution">→ 用 Skills 教你写金句</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-problem">发出去没有点击量</div>
+      <div class="pain-solution">→ 用 Skills 帮你写标题</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-problem">打开了但完读率低</div>
+      <div class="pain-solution">→ 用 Skills 帮你设计情绪曲线</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-problem">爆了一篇想承接流量</div>
+      <div class="pain-solution">→ 用 Skills 帮你创作相同选题</div>
+    </div>
+  </div>
+
+  <!-- ==================== 十一、关于AI味 ==================== -->
+  <h2 id="ai-taste"><span>🤖</span> 十一、关于 AI 味</h2>
+
+  <div class="card card-highlight">
+    <p>Skills 中有去 AI 味的步骤，但<strong>去除 AI 味不是单纯靠提示词就能解决的</strong>，和你使用的模型和调教过程有很大关系。</p>
+    <p style="margin-top:8px"><strong>Skills 的重点不是去 AI 味</strong>，纠结 AI 味的小伙伴不建议使用。</p>
+  </div>
+
+  <div class="tip-box tip-info">
+    <span class="tip-icon">💭</span>
+    <div>Skills 是给 AI 用的，更是提高你自己的。<br><strong>拆解优秀账号，做更好的自己。</strong>这是雲初馥的初心！</div>
+  </div>
+
+  <!-- ==================== 十二、常见问题 ==================== -->
+  <h2 id="faq"><span>❓</span> 十二、常见问题</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 启动报错 "EADDRINUSE: address already in use :::3210"</div>
+    <div class="faq-a">3210 端口已被占用，说明服务器已在运行。直接访问 http://localhost:3210 即可。如需重启：<br>
+      <code>netstat -ano | findstr :3210</code> → 找到 PID → <code>taskkill /PID &lt;PID号&gt; /F</code> → 重新 <code>node server.js</code>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 连接 AI 失败 "Failed to fetch"</div>
+    <div class="faq-a">这是 CORS 跨域问题。确保通过 <strong>http://localhost:3210</strong> 访问（而非直接打开 HTML 文件），且代理服务器已启动（<code>node server.js</code>）。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 小米 MiMo API 返回 404</div>
+    <div class="faq-a">API 地址必须填写<strong>完整路径</strong>：<code>https://token-plan-cn.xiaomimimo.com/v1/chat/completions</code>，不能只填到 <code>/v1</code>。模型名应为小写 <code>mimo-v2.5-pro</code>。点击「小米 MiMo」预设会自动填入正确配置。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 链接导入的文章没有内容？</div>
+    <div class="faq-a">因微信有反爬机制，链接导入仅保存 URL，不会自动抓取正文。建议使用<strong>粘贴内容</strong>或<strong>Excel 导入</strong>方式添加文章正文。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 拆解需要多长时间？</div>
+    <div class="faq-a">单篇文章拆解约 10-30 秒（取决于模型响应速度和文章长度）。50 篇文章一键拆解约 15-25 分钟。生成报告和蒸馏 Skills 各需 2-3 分钟。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 支持哪些 AI 模型？</div>
+    <div class="faq-a">支持所有<strong> OpenAI 兼容接口</strong>的模型。内置预设：DeepSeek、智谱 GLM、豆包、小米 MiMo、OpenAI。也可以手动填写其他兼容 API 的地址。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ 数据存在哪里？安全吗？</div>
+    <div class="faq-a">所有数据存在浏览器的 <strong>localStorage</strong> 中，不会上传到任何服务器。AI 分析时仅将文章内容发送给你配置的 API。建议定期使用「📦 导出全部数据」功能备份。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ Skills 导出后怎么用？</div>
+    <div class="faq-a">三种方式：<br>
+      1️⃣ <strong>提示词版</strong>：最简单，下载 MD 文件发给大模型即可<br>
+      2️⃣ <strong>IMA 知识库</strong>：将 MD 文件上传到 IMA 知识库，在知识库中触发创作<br>
+      3️⃣ <strong>AI Agent</strong>：将 SOP 文件夹放到 Skills 目录下，效果最好但需搭建环境
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">❓ Excel 导入支持什么格式？</div>
+    <div class="faq-a">支持 <code>.xlsx</code>、<code>.xls</code>、<code>.csv</code> 三种格式。Excel 至少需要包含「标题」和「正文内容」两列，列名可自定义，导入时会自动识别或手动映射。</div>
+  </div>
+
+  <div style="text-align:center;margin-top:60px;padding:24px;color:var(--text-muted);font-size:13px">
+    <p>🦆 雲初馥 v1.0</p>
+    <p>拆解优秀账号，做更好的自己</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Cookie files (sensitive)
+cookies.json
+cookie_raw.txt
+douyin_cookies.json
+*_cookies.json
+
+# Build artifacts
+build/
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code config
+.claude/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
